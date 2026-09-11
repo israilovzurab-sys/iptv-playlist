@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>IPTV панель — облако</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:-apple-system,Segoe UI,Arial,sans-serif;background:#0f1115;color:#eaeaea;margin:0;padding:24px}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:22px;margin-bottom:4px}
+.sub{color:#9aa0a6;margin-bottom:24px}
+.card{background:#1a1d24;border-radius:12px;padding:20px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.stat{background:#22262f;border-radius:10px;padding:14px}
+.stat .n{font-size:26px;font-weight:700}
+.stat .l{color:#9aa0a6;font-size:13px}
+.ok{color:#4caf50}.bad{color:#e05252}
+a.btn{display:inline-block;background:#2c313c;color:#eaeaea;text-decoration:none;border-radius:8px;padding:10px 16px;font-size:14px;margin:4px 6px 4px 0}
+code{background:#22262f;padding:2px 6px;border-radius:6px;word-break:break-all}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+td{padding:6px 4px;border-bottom:1px solid #2c313c;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>📺 IPTV — облачная панель</h1>
+<div class="sub">Работает на серверах GitHub, компьютер выключать можно</div>
+
+<div class="card"><div class="grid" id="stats"></div></div>
+
+<div class="card">
+  <b>Ссылки для приложения на телевизоре</b>
+  <table>
+    <tr><td>M3U плейлист</td><td><code id="m3u-url">...</code></td></tr>
+    <tr><td>EPG (XMLTV)</td><td><code id="epg-url">...</code></td></tr>
+  </table>
+  <a class="btn" href="playlist.m3u" target="_blank">Открыть M3U</a>
+  <a class="btn" href="epg.xml" target="_blank">Открыть XMLTV</a>
+</div>
+
+<div class="card">
+  <b>Каналы по категориям</b>
+  <table id="groups"></table>
+</div>
+
+<div class="card sub">
+  Обновляется автоматически на серверах GitHub Actions каждые 8 часов,
+  без участия вашего компьютера или телевизора.
+</div>
+</div>
+<script>
+async function refresh(){
+  const r = await fetch('status.json', {cache:'no-store'});
+  const s = await r.json();
+  document.getElementById('m3u-url').textContent = s.playlist_url;
+  document.getElementById('epg-url').textContent = s.epg_url;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="n">${s.found_total||0}</div><div class="l">Найдено каналов</div></div>
+    <div class="stat"><div class="n ok">${s.working_total||0}</div><div class="l">Рабочих</div></div>
+    <div class="stat"><div class="n bad">${s.dead_total||0}</div><div class="l">Нерабочих</div></div>
+    <div class="stat"><div class="n">${s.last_update||'—'}</div><div class="l">Последнее обновление (UTC)</div></div>
+  `;
+  const groups = s.by_group || {};
+  let rows='';
+  Object.keys(groups).sort().forEach(g=>{ rows += `<tr><td>${g}</td><td>${groups[g]}</td></tr>`; });
+  document.getElementById('groups').innerHTML = rows || '<tr><td>нет данных</td></tr>';
+}
+refresh();
+</script>
+</body>
+</html>
