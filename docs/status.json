@@ -1,19 +1,19 @@
 {
-  "last_update": "2026-10-20T13:14:13Z",
+  "last_update": "2026-10-20T19:49:16Z",
   "found_total": 5448,
-  "working_total": 1798,
-  "dead_total": 1350,
+  "working_total": 1795,
+  "dead_total": 1344,
   "by_group": {
     "🇷🇺 Россия/Познавательные": 27,
-    "🇷🇺 Россия/Региональные и другие": 87,
-    "🇷🇺 Россия/Развлечения": 72,
+    "🇷🇺 Россия/Развлечения": 71,
     "🇷🇺 Россия/Музыка": 28,
+    "🇷🇺 Россия/Региональные и другие": 86,
     "🇷🇺 Россия/Фильмы": 48,
     "🇷🇺 Россия/Новости": 15,
+    "🇷🇺 Россия/Спорт": 9,
     "🇷🇺 Россия/Дети": 12,
     "🇷🇺 Россия/Федеральные": 22,
     "🇷🇺 Россия/Сериалы": 13,
-    "🇷🇺 Россия/Спорт": 10,
     "🌍 Мир/Kids": 183,
     "🌍 Мир/Other": 183,
     "🌍 Мир/Documentary": 183,
@@ -23,7 +23,7 @@
     "🌍 Мир/Music": 183,
     "🌍 Мир/Sports": 183
   },
-  "epg_ok": true,
+  "epg_ok": false,
   "playlist_url": "https://israilovzurab-sys.github.io/iptv-playlist/playlist.m3u",
   "epg_url": "https://israilovzurab-sys.github.io/iptv-playlist/epg.xml"
 }
